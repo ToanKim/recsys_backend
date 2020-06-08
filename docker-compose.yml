@@ -1,0 +1,48 @@
+version: '3.0'
+
+services: 
+    flask_backend:
+        build: .
+        container_name: recsys_backend
+        ports: 
+            - '12000:5000'
+        volumes: 
+            - '.:/project'
+        depends_on: 
+            - mysql_db
+        networks: 
+            - flask_db_net
+        tty: true
+        command: ["./scripts/wait-for-it.sh", "mysql_db:3306", "--timeout=60", "--strict", "--", "python", "app.py"]
+    
+    mysql_db:
+        image: mysql:8
+        container_name: recsys_db
+        command: --default-authentication-plugin=mysql_native_password
+        ports:
+            - '12001:3306'
+        environment: 
+            MYSQL_ROOT_PASSWORD: rootpassword
+            MYSQL_DATABASE: recsys
+        volumes: 
+            - ./db_init/initialization.sql:/docker-entrypoint-initdb.d/initialization.sql
+        networks: 
+            - phpmyadmin_db_net
+            - flask_db_net
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin:5.0
+        container_name: recsys_phpmyadmin
+        ports:
+            - 12002:80
+        environment: 
+            PMA_HOST: mysql_db
+            PMA_PORT: 3306
+        networks: 
+            - phpmyadmin_db_net
+        depends_on: 
+            - mysql_db
+
+networks: 
+    flask_db_net:
+    phpmyadmin_db_net:
