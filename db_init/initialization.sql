@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql_db:3306
--- Generation Time: Jun 08, 2020 at 03:09 PM
+-- Generation Time: Jun 09, 2020 at 03:21 AM
 -- Server version: 8.0.20
 -- PHP Version: 7.4.4
 
@@ -54,6 +54,26 @@ CREATE TABLE `users` (
   `uuid` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_clicks`
+--
+
+CREATE TABLE `user_clicks` (
+  `id` int UNSIGNED NOT NULL,
+  `time` date NOT NULL,
+  `user_id` varchar(1024) NOT NULL,
+  `product_id` int UNSIGNED NOT NULL,
+  `belong_cate_lvl1_id` smallint UNSIGNED NOT NULL,
+  `belong_cate_lvl2_id` smallint UNSIGNED NOT NULL,
+  `belong_cate_lvl3_id` smallint UNSIGNED NOT NULL,
+  `belong_cate_lvl1_name` varchar(1024) NOT NULL,
+  `belong_cate_lvl2_name` varchar(1024) NOT NULL,
+  `belong_cate_lvl3_name` varchar(1024) NOT NULL,
+  `href` varchar(2048) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 --
 -- Indexes for dumped tables
 --
@@ -72,6 +92,12 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `username_unique` (`username`);
 
 --
+-- Indexes for table `user_clicks`
+--
+ALTER TABLE `user_clicks`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -85,6 +111,12 @@ ALTER TABLE `test_connection`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `user_clicks`
+--
+ALTER TABLE `user_clicks`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 COMMIT;
 

@@ -13,8 +13,9 @@ services:
         networks: 
             - flask_db_net
         tty: true
-        command: ["./scripts/wait-for-it.sh", "mysql_db:3306", "--timeout=60", "--strict", "--", "python", "app.py"]
-    
+        restart: unless-stopped
+        command: ["python", "app.py"]
+
     mysql_db:
         image: mysql:8
         container_name: recsys_db
@@ -38,6 +39,8 @@ services:
         environment: 
             PMA_HOST: mysql_db
             PMA_PORT: 3306
+            UPLOAD_LIMIT: 1073741824
+            PMA_USER_CONFIG_BASE64: JGNmZ1snRXhlY1RpbWVMaW1pdCddID0gMDsK
         networks: 
             - phpmyadmin_db_net
         depends_on: 
