@@ -18,6 +18,12 @@ def test_db():
     return dict(result)
 
 
+
+@api.route('/home', methods=['GET'])
+def get_home():
+    pass
+
+
 # Register blueprint
 app.register_blueprint(api)
 
