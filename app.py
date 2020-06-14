@@ -66,7 +66,6 @@ def get_clicks(user_id):
 
 def insert_click(user_id, product_id):
     try:
-        print(type(product_id))
         current_time = datetime.now().strftime(TIME_FORMAT)
         c.execute("""   INSERT INTO user_clicks (time, user_id, product_id)
                         VALUES (%s, %s, %s)""", (current_time, user_id, product_id))
@@ -124,7 +123,6 @@ def hello_world():
 def test_db():
     c.execute("""SELECT * FROM test_connection""")
     result = c.fetchall()
-    print(result)
     return dict(result)
 
 @api.route('/click', methods=['POST'])
@@ -181,8 +179,6 @@ def get_home():
 
         recommendations = recommendations + normalize_products(get_random_products_from_lvl2_id(lvl2_id_list_2nd[0], 6))
         recommendations = recommendations + normalize_products(get_random_products_from_lvl2_id(lvl2_id_list_2nd[1], 3))
-        
-    print(recommendations)    
 
     return {
         "hot_products": normalize_products(hot_products),
